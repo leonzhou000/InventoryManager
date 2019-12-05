@@ -7,11 +7,11 @@
              x:Class="InverntoryManager.Pages.InventoryPage"
              Title="Inventory">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="plus.png" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Icon="plus.png" Clicked="OnAdd_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <ListView >
+            <ListView x:Name="item">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding Name}" Detail="{Binding Status}"/>

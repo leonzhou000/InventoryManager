@@ -14,7 +14,7 @@ namespace InverntoryManager.Droid.Data
         public SQLiteAsyncConnection GetConnection()
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var path = Path.Combine(documentsPath, "MySQLite.db3");
+            var path = Path.Combine(documentsPath, "InventoryDb.db");
 
             return new SQLiteAsyncConnection(path);
         }
