@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:InverntoryManager.MarkupExtension"
+             xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             mc:Ignorable="d"
+             x:Class="InverntoryManager.Pages.ProfilePage"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <BoxView Color="Crimson" x:Name="banner"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression 
+                                                    Type=RelativeToParent, 
+                                                    Property=Width, 
+                                                    Factor=1 }"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression 
+                                                    Type=RelativeToParent,
+                                                    Property=Height, 
+                                                    Factor=0.3 }"/>
+            <ic:CircleImage x:Name="ProfileImg" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" 
+                    RelativeLayout.XConstraint="{ConstraintExpression 
+                                                Type=RelativeToParent,
+                                                Property=Width, 
+                                                Factor=.5, 
+                                                Constant = -50}" 
+                    RelativeLayout.YConstraint="{ConstraintExpression 
+                                                Type=RelativeToView, 
+                                                ElementName=banner, 
+                                                Factor=1, 
+                                                Property=Height, 
+                                                Constant=-50}"
+                    Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.BlankProfile.jpg}"/>
+            <Label x:Name="username" Text="{Binding FirstName}" TextColor="Black" FontAttributes="Bold" FontSize="26" HorizontalTextAlignment="Center" 
+                    RelativeLayout.YConstraint="{ConstraintExpression 
+                                                Type=RelativeToView,
+                                                ElementName=ProfileImg,
+                                                Property=Height,
+                                                Factor=3,Constant=-50}"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression 
+                                                Type=RelativeToParent, 
+                                                Property=Width, 
+                                                Factor=1}"/>
+            <Button Text="Sign out" Clicked="Button_Clicked"
+                    RelativeLayout.XConstraint="{ConstraintExpression 
+                                                Type=RelativeToParent,
+                                                Property=Width, 
+                                                Factor=.5, 
+                                                Constant = -50}" 
+                    RelativeLayout.YConstraint="{ConstraintExpression 
+                                                Type=RelativeToView, 
+                                                ElementName=banner, 
+                                                Factor=3, 
+                                                Property=Height, 
+                                                Constant=-10}"/>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

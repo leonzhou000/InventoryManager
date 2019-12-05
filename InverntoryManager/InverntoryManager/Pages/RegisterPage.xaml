@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:InverntoryManager.MarkupExtension"
+             mc:Ignorable="d"
+             x:Class="InverntoryManager.Pages.RegisterPage"
+             Title="Sign Up"
+             BackgroundColor="Crimson"
+             Padding="20,30">
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="White">
+            <Image Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.WesternLogo.png}" 
+                   x:Name="logo" 
+                   AbsoluteLayout.LayoutBounds="0.5,0.05,0.3,0.3"
+                   AbsoluteLayout.LayoutFlags="PositionProportional,SizeProportional"/>
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5, 0.4, 300, 50" 
+                         AbsoluteLayout.LayoutFlags="PositionProportional">
+                <Entry Placeholder="Username" 
+                    TextColor="Gray" 
+                    x:Name="UserName" />
+                <Entry Placeholder="Password" 
+                    TextColor="Gray"
+                    x:Name="password"
+                    IsPassword="True"/>
+                <Picker Title="Choose one.." FontSize="14">
+                    <Picker.Items>
+                        <x:String>Student</x:String>
+                        <x:String>Teacher</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+            <Button Text="Sign up" x:Name="signUpBtm"
+                    BackgroundColor="Crimson" TextColor="White"
+                    AbsoluteLayout.LayoutBounds="0.5, 0.85, 320, 50" 
+                    AbsoluteLayout.LayoutFlags="PositionProportional" 
+                    Clicked="signUpBtm_Clicked"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
