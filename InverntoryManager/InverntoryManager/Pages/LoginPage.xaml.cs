@@ -16,11 +16,8 @@ namespace InverntoryManager.Pages
     public partial class LoginPage : ContentPage
     {
         private SQLiteAsyncConnection _connection;
-
-        public List<User> login = new List<User> 
-        { 
-            new User { Username = "user", Password = "1234", FirstName = "User1"} 
-        };
+        private List<User> _users;
+        private User info;
 
         public LoginPage()
         {
@@ -32,38 +29,60 @@ namespace InverntoryManager.Pages
         {
             UserName.Completed += (s, e) => password.Focus();
             password.Completed += (s, e) => signInBtm_Clicked(s, e);
-            var connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTableAsync<User>();
+            _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            getUsersTable();
+        }
+
+        private async void getUsersTable()
+        {
+            var users = await _connection.Table<User>().ToListAsync();
+            _users = new List<User>(users);
         }
 
         private void signInBtm_Clicked(object sender, EventArgs e)
         {
-            User user = new User(UserName.Text, password.Text);
             if (checkUser())
             {
                 DisplayAlert("Sign in"," Signin Success","OK");
-                MainPage page = new MainPage(user);
+                MainPage page = new MainPage(info);
                 Application.Current.MainPage = page;
-
             }
         }
         private bool checkUser()
         {
-            if (UserName.Text == login[0].Username && 
-                password.Text == login[0].Password)
-            {
-                return true;
-            }
-            else if (String.IsNullOrEmpty(UserName.Text) && 
-                    String.IsNullOrEmpty(password.Text))
+            if (String.IsNullOrEmpty(UserName.Text) && String.IsNullOrEmpty(password.Text))
             {
                 DisplayAlert("Sign in", "Invald Username or Password", "OK");
                 return false;
             }
-            else
+
+            foreach (var user in _users)
             {
-                DisplayAlert("Sign in", " Signin Failed", "OK");
-                return false;
+                if(UserName.Text == user.Username && password.Text != user.Password)
+                {
+                    DisplayAlert("Sign in", "Invald Password", "OK");
+                    return false;
+                }
+                if (UserName.Text == user.Username && password.Text == user.Password)
+                {
+                    info = user;
+                    return true;
+                }
+            }
+
+            DisplayAlert("Sign in", " Sign in Failed", "OK");
+            return false;
+        }
+
+        private void showPassword_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (showPassword.IsChecked) 
+            {
+                password.IsPassword = false;
+            }
+            if (!showPassword.IsChecked)
+            {
+                password.IsPassword = true;
             }
         }
     }

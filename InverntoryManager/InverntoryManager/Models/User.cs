@@ -6,7 +6,7 @@ namespace InverntoryManager.Models
 {
     public class User
     {
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -30,29 +30,35 @@ namespace InverntoryManager.Models
                 _firstName = value;
 
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(FullName));
+                OnPropertyChanged(nameof(FirstName));
             }
         }
 
+        private string _LastName;
+
         [MaxLength(255)]
-        public string LastName { get; set; }
+        public string LastName 
+        { 
+            get { return _LastName; }
+            set 
+            {
+                if (_LastName == value)
+                    return;
+
+                _LastName = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(LastName));
+            } 
+        }
+
         public bool admin { get; set; }
 
         public User() { }
-        public User(string Username, string Password)
-        {
-            this.Username = Username;
-            this.Password = Password;
-        }
-
-        public string FullName
-        {
-            get { return $"{FirstName} {LastName}"; }
-        }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-           //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+           PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

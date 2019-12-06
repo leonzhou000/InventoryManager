@@ -40,17 +40,14 @@ namespace InverntoryManager
                     new MainPageMasterMenuItem { Id = 0, Title = "Home" , TargetType = typeof(HomePage), Profile = user},
                     new MainPageMasterMenuItem { Id = 1, Title = "Account" , TargetType = typeof(ProfilePage), Profile = user},
                     new MainPageMasterMenuItem { Id = 2, Title = "Inventory",TargetType = typeof(InventoryPage), Profile = user },
-                    new MainPageMasterMenuItem { Id = 3, Title = "Report",TargetType = typeof(ReportPage), Profile = user }
+                    new MainPageMasterMenuItem { Id = 3, Title = "Notifications",TargetType = typeof(ReportPage), Profile = user }
                 });
             }
 
             #region INotifyPropertyChanged Implementation
             public event PropertyChangedEventHandler PropertyChanged;
-            void OnPropertyChanged([CallerMemberName] string propertyName = "")
-            {
-                if (PropertyChanged == null)
-                    return;
-
+            private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            { 
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             #endregion

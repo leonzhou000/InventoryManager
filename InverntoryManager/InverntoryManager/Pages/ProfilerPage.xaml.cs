@@ -23,36 +23,7 @@ namespace InverntoryManager.Pages
 
         private void Init()
         {
-            buildGrid();
-        }
 
-        private void buildGrid()
-        {
-            //MainGrid.RowSpacing = 5;
-            //MainGrid.ColumnSpacing = 5;
-            //for (int i = 0; i < 21; i++)
-            //{
-            //    var label = new Label { Text = "Hello " + i, BackgroundColor = Color.Silver };
-            //    test.Add(label);
-            //}
-
-            //for (int j = 0; j < (test.Count / 2); j++)
-            //{
-            //    MainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Absolute) });
-            //}
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    MainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            //}
-
-            //int row = 0;
-            //int col = 0;
-            //foreach(var l in test)
-            //{
-            //    MainGrid.Children.Add(l, (col%3), row);
-            //    col++;
-            //    if (col%3 == 0) { row++; }
-            //}
         }
 
         protected override bool OnBackButtonPressed()

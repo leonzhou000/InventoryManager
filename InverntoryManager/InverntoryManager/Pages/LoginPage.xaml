@@ -6,31 +6,60 @@
              xmlns:local="clr-namespace:InverntoryManager.MarkupExtension"
              mc:Ignorable="d"
              x:Class="InverntoryManager.Pages.LoginPage"
-             Title="Sign in"
-             BackgroundColor="Crimson"
-             Padding="20,30">
+             Title="Sign in">
     
     <ContentPage.Content>
-        <AbsoluteLayout BackgroundColor="White">
-            <Image Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.WesternLogo.png}" 
-                   x:Name="logo" 
-                   AbsoluteLayout.LayoutBounds="0.5,0.03,0.5,0.5"
-                   AbsoluteLayout.LayoutFlags="PositionProportional,SizeProportional"/>
-            <StackLayout AbsoluteLayout.LayoutBounds="0.5, 0.5, 300, 50" 
-                         AbsoluteLayout.LayoutFlags="PositionProportional">
-                <Entry Placeholder="Username" 
-                    TextColor="Gray" 
-                    x:Name="UserName"/>
-                <Entry Placeholder="Password" 
-                    TextColor="Gray"
-                    x:Name="password"
-                    IsPassword="True"/>
-            </StackLayout>
-            <Button Text="Sign in" x:Name="signInBtm"
-                    BackgroundColor="Crimson" TextColor="White"
-                    AbsoluteLayout.LayoutBounds="0.5, 0.85, 320, 50" 
-                    AbsoluteLayout.LayoutFlags="PositionProportional" 
-                    Clicked="signInBtm_Clicked"/>
-        </AbsoluteLayout>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="230"/>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" BackgroundColor="Crimson">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Row="1" Grid.Column="1" Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.WesternLogo.png}"/>
+                    </Grid>
+                </StackLayout>
+                <StackLayout Grid.Row="1" Margin="10,20,10,20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Sign In" Grid.Row="0" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"
+                               FontSize="25" Style="{DynamicResource TitleStyle}"/>
+                        <Entry Grid.Row="1" Placeholder="Username" TextColor="Gray" x:Name="UserName"/>
+                        <Entry Grid.Row="2" Placeholder="Password" TextColor="Gray" x:Name="password"
+                            IsPassword="True"/>
+                        <StackLayout Orientation="Horizontal" Grid.Row="3">
+                            <CheckBox Color="Black" x:Name="showPassword" CheckedChanged="showPassword_CheckedChanged"/>
+                            <Label Text="Show password" VerticalOptions="Center"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Grid.Row="4">
+                            <CheckBox Color="Black" x:Name="autoLogin"/>
+                            <Label Text="Remember me" VerticalOptions="Center"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                <StackLayout Grid.Row="2" Margin="30,10,30,0">
+                    <Button Text="Sign In"  x:Name="signInBtm"
+                        BackgroundColor="Crimson" TextColor="White" Clicked="signInBtm_Clicked"/>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

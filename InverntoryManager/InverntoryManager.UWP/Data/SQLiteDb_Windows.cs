@@ -15,7 +15,7 @@ namespace InverntoryManager.UWP.Data
         public SQLiteAsyncConnection GetConnection()
         {
             var documentsPath = ApplicationData.Current.LocalFolder.Path;
-            var path = Path.Combine(documentsPath, "InventoryDb.db");
+            var path = Path.Combine(documentsPath, "InventoryDb.db3");
             return new SQLiteAsyncConnection(path);
         }
     }

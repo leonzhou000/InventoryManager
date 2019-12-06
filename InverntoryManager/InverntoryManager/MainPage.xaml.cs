@@ -18,6 +18,7 @@ namespace InverntoryManager
             InitializeComponent(); 
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
             MasterPage.user = user;
+
             //if (Device.RuntimePlatform == Device.UWP)
             //{
             //    MasterBehavior = MasterBehavior.Popover;
