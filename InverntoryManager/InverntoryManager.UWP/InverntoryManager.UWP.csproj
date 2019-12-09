@@ -132,6 +132,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="add.png" />
+    <AndroidResource Include="editProfile.png" />
     <Content Include="group.png" />
     <Content Include="minus.png" />
     <Content Include="noImage.png" />
@@ -150,6 +151,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Net.Http">
+      <Version>2.2.29</Version>
+    </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.6.292</Version>
     </PackageReference>

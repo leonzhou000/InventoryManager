@@ -9,51 +9,41 @@
              x:Class="InverntoryManager.Pages.ProfilePage"
              BackgroundColor="White">
     <ContentPage.Content>
-        <RelativeLayout>
-            <BoxView Color="Crimson" x:Name="banner"
-                    RelativeLayout.WidthConstraint="{ConstraintExpression 
-                                                    Type=RelativeToParent, 
-                                                    Property=Width, 
-                                                    Factor=1 }"
-                    RelativeLayout.HeightConstraint="{ConstraintExpression 
-                                                    Type=RelativeToParent,
-                                                    Property=Height, 
-                                                    Factor=0.3 }"/>
-            <ic:CircleImage x:Name="ProfileImg" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" 
-                    RelativeLayout.XConstraint="{ConstraintExpression 
-                                                Type=RelativeToParent,
-                                                Property=Width, 
-                                                Factor=.5, 
-                                                Constant = -50}" 
-                    RelativeLayout.YConstraint="{ConstraintExpression 
-                                                Type=RelativeToView, 
-                                                ElementName=banner, 
-                                                Factor=1, 
-                                                Property=Height, 
-                                                Constant=-50}"
-                    Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.BlankProfile.jpg}"/>
-            <Label x:Name="username" Text="{Binding FirstName}" TextColor="Black" FontAttributes="Bold" FontSize="26" HorizontalTextAlignment="Center" 
-                    RelativeLayout.YConstraint="{ConstraintExpression 
-                                                Type=RelativeToView,
-                                                ElementName=ProfileImg,
-                                                Property=Height,
-                                                Factor=3,Constant=-50}"
-                    RelativeLayout.WidthConstraint="{ConstraintExpression 
-                                                Type=RelativeToParent, 
-                                                Property=Width, 
-                                                Factor=1}"/>
-            <Button Text="Sign out" Clicked="Button_Clicked"
-                    RelativeLayout.XConstraint="{ConstraintExpression 
-                                                Type=RelativeToParent,
-                                                Property=Width, 
-                                                Factor=.5, 
-                                                Constant = -50}" 
-                    RelativeLayout.YConstraint="{ConstraintExpression 
-                                                Type=RelativeToView, 
-                                                ElementName=banner, 
-                                                Factor=3, 
-                                                Property=Height, 
-                                                Constant=-10}"/>
-        </RelativeLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid BackgroundColor="Crimson" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="profile" Grid.Row="1" Grid.Column="1" 
+                       Source="{Binding url}"/>
+                <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="Hello"  FontAttributes="Bold" FontSize="Body" TextColor="White"/>
+                    <Label Text="{Binding _user.FirstName}"  FontAttributes="Bold" FontSize="Body" TextColor="White"/>
+                </StackLayout>
+            </Grid>
+            <ScrollView>
+                <StackLayout Grid.Row="1">
+                    
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Grid.Row="2">
+                <Button Text="Sign out" Clicked="Button_Clicked"/>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

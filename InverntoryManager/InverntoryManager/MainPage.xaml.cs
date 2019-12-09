@@ -13,16 +13,16 @@ namespace InverntoryManager
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : MasterDetailPage
     {
-        public MainPage(User user)
+        public User info { set; get; }
+        public MainPage()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
-            MasterPage.user = user;
 
-            //if (Device.RuntimePlatform == Device.UWP)
-            //{
-            //    MasterBehavior = MasterBehavior.Popover;
-            //}
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                MasterBehavior = MasterBehavior.Popover;
+            }
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

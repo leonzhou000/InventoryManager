@@ -21,11 +21,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <SearchBar Grid.Column="0" Placeholder="Search" TextChanged="SearchBar_TextChanged" />
+                <SearchBar x:Name="SearchBar" Grid.Column="0" Placeholder="Search" TextChanged="SearchBar_TextChanged" />
                 <CheckBox Grid.Column="1" x:Name="MultiSelect"/>
             </Grid>
             <CollectionView x:Name="itemCollectionView" 
-                      Margin="10" SelectionMode="Single"> 
+                      Margin="10" SelectionMode="Single">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2" />
                 </CollectionView.ItemsLayout>
@@ -55,8 +55,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

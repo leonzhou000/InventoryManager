@@ -1,6 +1,7 @@
 ﻿using InverntoryManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,17 +14,30 @@ namespace InverntoryManager.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
-        public User user { get; set; }
+        public User _user { get; set; }
+        public string url { get; set; }
+        public CollectionView CollectionView;
         public ProfilePage()
         {
             InitializeComponent();
-            BindingContext = user;
-            //Init();
+            Init();
         }
 
         private void Init()
         {
+            _user = ConstentsUser.user;
 
+            profileImageHandler();
+        }
+
+        public void profileImageHandler()
+        {
+            if (String.IsNullOrEmpty(_user.imageUrl)) 
+            {
+                profile.Source = ImageSource.FromResource("HelloWorld.Image.BlankProfile.jpg");
+                return;
+            }
+            url = _user.imageUrl;
         }
 
         protected override bool OnBackButtonPressed()
@@ -37,4 +51,5 @@ namespace InverntoryManager.Pages
             await Navigation.PushAsync(new OpeningPage());
         }
     }
+
 }

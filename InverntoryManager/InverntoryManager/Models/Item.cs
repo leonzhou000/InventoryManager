@@ -66,6 +66,12 @@ namespace InverntoryManager.Models
         [MaxLength(255)]
         public string Class { get; set; }
 
+        [MaxLength(255)]
+        public String AddDate { get; set; }
+
+        [MaxLength(255)]
+        public String UpdateData { get; set; }
+
         public bool Selected { get; set; }
 
         void OnPropertyChanged([CallerMemberName] string propertyName = null)

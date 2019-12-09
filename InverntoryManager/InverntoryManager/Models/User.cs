@@ -54,6 +54,9 @@ namespace InverntoryManager.Models
 
         public bool admin { get; set; }
 
+        [MaxLength(255)]
+        public string imageUrl { get; set; }
+
         public User() { }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

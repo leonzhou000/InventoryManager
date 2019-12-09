@@ -121,6 +121,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Net.Http">
+      <Version>2.2.29</Version>
+    </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.6.292</Version>
     </PackageReference>
@@ -181,5 +184,14 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\noImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\editProfile%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\editProfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\editProfile%403x.png" />
   </ItemGroup>
 </Project>

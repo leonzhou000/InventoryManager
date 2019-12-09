@@ -43,7 +43,7 @@ namespace InverntoryManager.Pages
             {
                 if (user.Username == userName.Text) 
                 {
-                    DisplayAlert("Username Invalid!", "Your username is not valid.", "OK");
+                    DisplayAlert("Username Invalid!", "Your username already exists.", "OK");
                     return false;
                 }
             }

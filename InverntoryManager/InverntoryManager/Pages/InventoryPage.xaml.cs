@@ -16,29 +16,34 @@ namespace InverntoryManager.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InventoryPage : ContentPage
     {
-        public User user { get; set; }
+        public User _user { get; set; }
         public Item item { get; set; }
         private SQLiteAsyncConnection _connection;
         private ObservableCollection<Item> _items;
 
         public InventoryPage()
         {
+            _user = ConstentsUser.user;
             InitializeComponent();
             Init();
         }
 
         private void Init()
         {
-            _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            
+            try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
+            catch { DisplayAlert("Error", "SQL Table Connection", "OK"); }
+
+            _items = GetItems();
+            itemCollectionView.ItemsSource = _items;
         }
 
-        ObservableCollection<Item> GetItem(string searchText = null)
+        private  ObservableCollection<Item> GetItems(string searchText = null)
         {
+            var items = _items;
             if (String.IsNullOrWhiteSpace(searchText))
-                return _items;
+                return items;
 
-            return _items.Where(c => c.Name.StartsWith(searchText)) as ObservableCollection<Item>;
+            return items.Where(c => c.Name.StartsWith(searchText)) as ObservableCollection<Item>;
         }
         protected override async void OnAppearing()
         {
@@ -46,17 +51,12 @@ namespace InverntoryManager.Pages
             _items = new ObservableCollection<Item>(items);
             itemCollectionView.ItemsSource = _items;
 
-            if (MultiSelect.IsChecked)
-            {
-                itemCollectionView.SelectedItem = null;
-            }
-
             base.OnAppearing();
         }
 
         private async void OnAdd_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new AddItemPage(user));
+            await Navigation.PushModalAsync(new AddItemPage(_user));
         }
         private async void Update_Clicked(object sender, EventArgs e)
         {
@@ -90,7 +90,7 @@ namespace InverntoryManager.Pages
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            itemCollectionView.ItemsSource = GetItem(e.NewTextValue);
+            itemCollectionView.ItemsSource = GetItems(e.NewTextValue);
         }
     }
 }

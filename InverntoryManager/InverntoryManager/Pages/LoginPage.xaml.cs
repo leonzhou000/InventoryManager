@@ -17,7 +17,7 @@ namespace InverntoryManager.Pages
     {
         private SQLiteAsyncConnection _connection;
         private List<User> _users;
-        private User info;
+        private User info { get; set; }
 
         public LoginPage()
         {
@@ -43,8 +43,9 @@ namespace InverntoryManager.Pages
         {
             if (checkUser())
             {
+                ConstentsUser.user = info;
                 DisplayAlert("Sign in"," Signin Success","OK");
-                MainPage page = new MainPage(info);
+                MainPage page = new MainPage();
                 Application.Current.MainPage = page;
             }
         }

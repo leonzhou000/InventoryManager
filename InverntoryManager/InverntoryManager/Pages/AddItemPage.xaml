@@ -8,7 +8,6 @@
              Title="Add new Item">
     <ContentPage.Content>
         <StackLayout Padding="10,20,10,10">
-            
             <TableView Intent="Data" >
                 <TableRoot >
                     <TableSection Title="Name">

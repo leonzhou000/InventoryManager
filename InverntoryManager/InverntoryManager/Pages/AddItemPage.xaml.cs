@@ -61,8 +61,11 @@ namespace InverntoryManager.Pages
                 Name = itemName.Text,
                 Stock = GetAmount(itemStock.Text),
                 ImageUrl = GetImage(pictureUrl.Text),
-                Selected = false,
-
+                Owner = _user.Username,
+                Class = "something",
+                AddDate = DateTime.Now.ToString(),
+                UpdateData = DateTime.Now.ToString(),
+                Selected = false
             };
 
             if (CheckForm())

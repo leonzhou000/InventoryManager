@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace InverntoryManager
 {
-
     public class MainPageMasterMenuItem
     {
         public MainPageMasterMenuItem()
@@ -18,6 +17,5 @@ namespace InverntoryManager
         public string Title { get; set; }
         public string IconSource { get; set; }
         public Type TargetType { get; set; }
-        public User Profile { get; set; }
     }
 }
