@@ -26,15 +26,24 @@ namespace InverntoryManager.Pages
 
         private void Init()
         {
-            _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
+            catch { return; }
             GetUsersTable();
         }
 
         private async void GetUsersTable()
         {
-            await _connection.CreateTableAsync<User>();
-            var users = await _connection.Table<User>().ToListAsync();
-            _users = new List<User>(users);
+            try
+            {
+                await _connection.CreateTableAsync<User>();
+                var users = await _connection.Table<User>().ToListAsync();
+                _users = new List<User>(users);
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Can not find table", "Ok");
+                return;
+            }
         }
 
         private bool checkUserName() 
@@ -101,11 +110,17 @@ namespace InverntoryManager.Pages
                     LastName = lastName.Text,
                     admin = AdminCheck()
                 };
-
-                await _connection.InsertAsync(user);
-                _users.Add(user);
-
-                await Navigation.PushAsync(new LoginPage());
+                try
+                {
+                    await _connection.InsertAsync(user);
+                    _users.Add(user);
+                    await Navigation.PushAsync(new LoginPage());
+                }
+                catch
+                {
+                    await DisplayAlert("Error", "Can not add user to table", "OK");
+                    return;
+                }
             }
         }
     }

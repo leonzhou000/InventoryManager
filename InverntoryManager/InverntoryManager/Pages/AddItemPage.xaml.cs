@@ -21,7 +21,12 @@ namespace InverntoryManager.Pages
         {
             _user = user;
             InitializeComponent();
-            _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
+            catch 
+            {
+                DisplayAlert("Error", "No table connected", "OK");
+                return; 
+            }
         }
 
         private bool CheckForm()

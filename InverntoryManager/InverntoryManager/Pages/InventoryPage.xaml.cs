@@ -32,7 +32,6 @@ namespace InverntoryManager.Pages
         {
             try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
             catch { DisplayAlert("Error", "SQL Table Connection", "OK"); }
-
             _items = GetItems();
             itemCollectionView.ItemsSource = _items;
         }
@@ -45,46 +44,82 @@ namespace InverntoryManager.Pages
 
             return items.Where(c => c.Name.StartsWith(searchText)) as ObservableCollection<Item>;
         }
+
         protected override async void OnAppearing()
         {
-            var items = await _connection.Table<Item>().ToListAsync();
-            _items = new ObservableCollection<Item>(items);
-            itemCollectionView.ItemsSource = _items;
-
+            try
+            {
+                var items = await _connection.Table<Item>().ToListAsync();
+                _items = new ObservableCollection<Item>(items);
+                itemCollectionView.ItemsSource = _items;
+            }
+            catch
+            {
+                return;
+            }
             base.OnAppearing();
         }
 
         private async void OnAdd_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new AddItemPage(_user));
+            try
+            {
+                await Navigation.PushModalAsync(new AddItemPage(_user));
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Can not display page", "Ok");
+            }
         }
         private async void Update_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new UpdatePage());
+            try
+            {
+                await Navigation.PushModalAsync(new UpdatePage());
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Can not display page", "Ok");
+            }
         }
         private async void Delete_Clicked(object sender, EventArgs e)
         {
             if (MultiSelect.IsChecked)
             {
-                foreach(Item item in _items.ToList())
+                try
                 {
-                    if (item.Selected)
+                    foreach (Item item in _items.ToList())
                     {
-                        await _connection.DeleteAsync(item);
-                        _items.Remove(item);
+                        if (item.Selected)
+                        {
+                            await _connection.DeleteAsync(item);
+                            _items.Remove(item);
+                        }
                     }
                 }
+                catch
+                {
+                    return;
+                }
+                
             }
             else
             {
-                var item = itemCollectionView.SelectedItem as Item;
-                if (item == null) 
+                try
                 {
-                    await DisplayAlert("Alert", "No item selected", "OK");
-                    return; 
+                    var item = itemCollectionView.SelectedItem as Item;
+                    if (item == null)
+                    {
+                        await DisplayAlert("Alert", "No item selected", "OK");
+                        return;
+                    }
+                    await _connection.DeleteAsync(item);
+                    _items.Remove(item);
                 }
-                await _connection.DeleteAsync(item);
-                _items.Remove(item);
+                catch
+                {
+                    return;
+                }
             }
         }
 

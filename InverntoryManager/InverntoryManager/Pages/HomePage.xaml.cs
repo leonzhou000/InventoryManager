@@ -36,11 +36,17 @@ namespace InverntoryManager.Pages
 
         protected override async void OnAppearing()
         {
-            var items = await _connection.Table<Item>().ToListAsync();
-            _items = new ObservableCollection<Item>(items);
-            _items = _items.OrderBy(e => e.AddDate) as ObservableCollection<Item>;
-            itemCollectionView.ItemsSource = _items;
-
+            try
+            {
+                var items = await _connection.Table<Item>().ToListAsync();
+                _items = new ObservableCollection<Item>(items);
+                _items = _items.OrderBy(e => e.AddDate) as ObservableCollection<Item>;
+                itemCollectionView.ItemsSource = _items;
+            }
+            catch
+            {
+                return;
+            }
             base.OnAppearing();
         }
     }

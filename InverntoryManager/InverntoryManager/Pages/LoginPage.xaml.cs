@@ -35,8 +35,18 @@ namespace InverntoryManager.Pages
 
         private async void getUsersTable()
         {
-            var users = await _connection.Table<User>().ToListAsync();
-            _users = new List<User>(users);
+            try 
+            { 
+                var users = await _connection.Table<User>().ToListAsync();
+                _users = new List<User>(users);
+            }
+            catch  
+            {
+                await DisplayAlert("Error","No users in table","OK");
+                await Navigation.PushAsync(new RegisterPage());
+                return; 
+            }
+            
         }
 
         private void signInBtm_Clicked(object sender, EventArgs e)
@@ -47,6 +57,11 @@ namespace InverntoryManager.Pages
                 DisplayAlert("Sign in"," Signin Success","OK");
                 MainPage page = new MainPage();
                 Application.Current.MainPage = page;
+            }
+            else
+            {
+                DisplayAlert("Sign in failed", "No such username", "OK");
+                return;
             }
         }
         private bool checkUser()
@@ -70,8 +85,6 @@ namespace InverntoryManager.Pages
                     return true;
                 }
             }
-
-            DisplayAlert("Sign in", " Sign in Failed", "OK");
             return false;
         }
 
