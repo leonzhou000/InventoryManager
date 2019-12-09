@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -11,7 +10,6 @@ namespace InverntoryManager.Models
 {
     class inventoryService
     {
-        private static string AppUrl = @"https://inventorymanger.azurewebsites.net";
         
     }
 
