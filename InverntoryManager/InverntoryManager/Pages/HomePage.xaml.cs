@@ -16,31 +16,30 @@ namespace InverntoryManager.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        public User _user { get; set; }
+        public User user { get; set; }
         private SQLiteAsyncConnection _connection;
         private ObservableCollection<Item> _items;
 
         public HomePage()
         {
-            _user = ConstentsUser.user;
+            user = ConstentsUser.user;
             InitializeComponent();
+            profile.Text = user.Username;
             itemCollectionView.SelectionMode = SelectionMode.None;
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            _user = ConstentsUser.user;
-            DisplayAlert("Your username", _user.Username, "OK");
         }
 
         protected override async void OnAppearing()
         {
             try
             {
-                var items = await _connection.Table<Item>().ToListAsync();
+                var table = await _connection.Table<Item>().ToListAsync();
+                var items = from item in table
+                            where item.Owner == user.Username
+                            orderby item.AddDate ascending
+                            select item;
+
                 _items = new ObservableCollection<Item>(items);
-                _items = _items.OrderBy(e => e.AddDate) as ObservableCollection<Item>;
                 itemCollectionView.ItemsSource = _items;
             }
             catch

@@ -1,4 +1,6 @@
-﻿using InverntoryManager.Models;
+﻿using InverntoryManager.Data;
+using InverntoryManager.Models;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +19,8 @@ namespace InverntoryManager.Pages
         public User _user { get; set; }
         public string url { get; set; }
         public CollectionView CollectionView;
+        private SQLiteAsyncConnection _connection;
+
         public ProfilePage()
         {
             InitializeComponent();
@@ -26,7 +30,21 @@ namespace InverntoryManager.Pages
         private void Init()
         {
             _user = ConstentsUser.user;
+            BindingContext = _user;
+            getProfileInfo();
 
+            try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
+            catch
+            {
+                DisplayAlert("Error", "No table connected", "OK");
+                return;
+            }
+        }
+
+        private void getProfileInfo()
+        {
+            fName.Text = _user.FirstName;
+            lName.Text = _user.LastName;
             profileImageHandler();
         }
 
@@ -37,7 +55,10 @@ namespace InverntoryManager.Pages
                 profile.Source = ImageSource.FromResource("HelloWorld.Image.BlankProfile.jpg");
                 return;
             }
-            url = _user.imageUrl;
+            else
+            {
+                url = _user.imageUrl;
+            }
         }
 
         protected override bool OnBackButtonPressed()
@@ -45,10 +66,44 @@ namespace InverntoryManager.Pages
             return true;
         }
 
-        async private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Sign out", "Signed out", "Ok");
-            await Navigation.PushAsync(new OpeningPage());
+            bool responce =await DisplayAlert("Sign out", "Would you like to sign out?", "Yes", "No");
+            if (responce) { Application.Current.MainPage = new NavigationPage(new OpeningPage()); }
+            else { return; }
+        }
+
+        private void editProfile_Clicked(object sender, EventArgs e)
+        {
+            //need page
+        }
+
+        private async void inventory_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushAsync(new InventoryPage());
+            }
+            catch
+            {
+                await DisplayAlert("Error", "Can not display page", "Ok");
+            }
+        }
+
+        private async void delete_Clicked(object sender, EventArgs e)
+        {
+            bool repsonce = await DisplayAlert("Remove Account", "Are you sure you want to delete this account", "Yes", "No");
+            if (repsonce)
+            {
+                removeUser(_user);
+                Application.Current.MainPage = new NavigationPage(new OpeningPage());
+            }    
+            else { return; }
+        }
+
+        private async void removeUser(User user)
+        {
+           await _connection.DeleteAsync(user);
         }
     }
 

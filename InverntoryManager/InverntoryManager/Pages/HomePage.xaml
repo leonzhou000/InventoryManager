@@ -32,7 +32,8 @@
                 <Image Grid.Row="1" Grid.Column="1" Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.WesternLogo.png}"/>
                 <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <Label Text="Hello" FontAttributes="Bold"  FontSize="Body" TextColor="White"/>
-                    <Label Text="{Binding user.userName}"  FontSize="Body" TextColor="White" FontAttributes="Bold"/>
+                    <Label FontSize="Body" x:Name="profile"
+                           TextColor="White" FontAttributes="Bold"/>
                 </StackLayout>
             </Grid>
             <Label Text="Recently add Items" Grid.Row="1" VerticalOptions="End" Margin="33,0,0,0" 
@@ -41,24 +42,24 @@
                 <CollectionView x:Name="itemCollectionView" 
                       Margin="10" SelectionMode="Single">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                        <GridItemsLayout Orientation="Vertical" Span="3" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid Padding="5">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="35"/>
-                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="80"/>
+                                    <RowDefinition Height="100"/>
                                     <RowDefinition Height="35"/>
                                     <RowDefinition Height="35"/>
                                 </Grid.RowDefinitions>
                                 <Image Source="{Binding ImageUrl}" Grid.ColumnSpan="2" 
                                        Aspect="AspectFill" HeightRequest="60" WidthRequest="60"/>
-                                <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold"/>
-                                <StackLayout Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Grid.RowSpan="2">
+                                <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold" Grid.RowSpan="2" VerticalOptions="StartAndExpand"/>
+                                <StackLayout Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Grid.RowSpan="2" VerticalOptions="StartAndExpand">
                                     <Label Text="Stock:" FontSize="12"/>
                                     <Label Text="{Binding Stock}"  FontSize="12"/>
                                 </StackLayout>

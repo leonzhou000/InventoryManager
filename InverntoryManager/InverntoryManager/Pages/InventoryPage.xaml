@@ -24,6 +24,7 @@
                 <SearchBar x:Name="SearchBar" Grid.Column="0" Placeholder="Search" TextChanged="SearchBar_TextChanged" />
                 <CheckBox Grid.Column="1" x:Name="MultiSelect"/>
             </Grid>
+            <ActivityIndicator IsRunning="{Binding IsSearching}" />
             <CollectionView x:Name="itemCollectionView" 
                       Margin="10" SelectionMode="Single">
                 <CollectionView.ItemsLayout>

@@ -12,9 +12,9 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid BackgroundColor="Crimson" Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -29,19 +29,54 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
-                <Image x:Name="profile" Grid.Row="1" Grid.Column="1" 
-                       Source="{Binding url}"/>
+                <Image x:Name="profile" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" Aspect="AspectFill"
+                       Source="{local:EmbeddedImage ResourceId=InverntoryManager.Image.BlankProfile.jpg}"/>
                 <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                     <Label Text="Hello"  FontAttributes="Bold" FontSize="Body" TextColor="White"/>
-                    <Label Text="{Binding _user.FirstName}"  FontAttributes="Bold" FontSize="Body" TextColor="White"/>
+                    <Label Text="{Binding UserName}"  FontAttributes="Bold" FontSize="Body" TextColor="White"/>
                 </StackLayout>
             </Grid>
-            <ScrollView>
-                <StackLayout Grid.Row="1">
-                    
+            <Grid HorizontalOptions="StartAndExpand" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout  Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Label Text="First Name:" FontSize=" 16"/>
+                    <Label x:Name="fName" FontSize="16"/>
                 </StackLayout>
-            </ScrollView>
-            <StackLayout Grid.Row="2">
+                <StackLayout  Grid.Row="2" Grid.Column="1"  Orientation="Horizontal">
+                    <Label Text="Last Name:" FontSize=" 16"/>
+                    <Label x:Name="lName" FontSize="16"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+                    <Label Text="Total Items: " FontSize="18"/>
+                    <Label x:Name="Totalitems" FontSize="18"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="4" Grid.Column="1" >
+                    <Label Text="Most Common Item:" FontSize="18"/>
+                    <Label x:Name="mostStock" FontSize="18"/>
+                </StackLayout>
+                <StackLayout Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                    <Button x:Name="editProfile" BackgroundColor="Crimson"
+                            CornerRadius="20" Text="Edited" Clicked="editProfile_Clicked"/>
+                    <Button x:Name="inventory"  BackgroundColor="Crimson"
+                            CornerRadius="20" Text="Inventory" Clicked="inventory_Clicked"/>
+                    <Button x:Name="delete"  BackgroundColor="Crimson"
+                            CornerRadius="20" Text="Delete Account" Clicked="delete_Clicked"/>
+                </StackLayout>
+            </Grid>
+            <StackLayout Grid.Row="2" Margin="20,0,20,0">
                 <Button Text="Sign out" Clicked="Button_Clicked"/>
             </StackLayout>
         </Grid>

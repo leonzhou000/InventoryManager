@@ -8,11 +8,6 @@ using System.Text;
 
 namespace InverntoryManager.Models
 {
-    class inventoryService
-    {
-        
-    }
-
     class ConstentsUser
     {
         private static User _LoginUser = null;
@@ -23,22 +18,6 @@ namespace InverntoryManager.Models
             set { _LoginUser = value; }
         }
     }
-
-    class ConstItems
-    {
-        private List<Item> items = null;
-
-
-
-        public async void getItem()
-        {
-
-        }
-
-
-
-    }
-
 
     class MainPageMasterViewModel : INotifyPropertyChanged
     {
@@ -51,7 +30,7 @@ namespace InverntoryManager.Models
                     new MainPageMasterMenuItem { Id = 0, Title = "Home" , TargetType = typeof(HomePage) },
                     new MainPageMasterMenuItem { Id = 1, Title = "Account" , TargetType = typeof(ProfilePage) },
                     new MainPageMasterMenuItem { Id = 2, Title = "Inventory",TargetType = typeof(InventoryPage) },
-                    new MainPageMasterMenuItem { Id = 3, Title = "Notifications",TargetType = typeof(ReportPage) }
+                    //new MainPageMasterMenuItem { Id = 3, Title = "Notifications",TargetType = typeof(ReportPage) }
             });
         }
 

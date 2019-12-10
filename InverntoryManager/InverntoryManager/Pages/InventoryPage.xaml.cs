@@ -21,6 +21,15 @@ namespace InverntoryManager.Pages
         private SQLiteAsyncConnection _connection;
         private ObservableCollection<Item> _items;
 
+        private BindableProperty IsSearchingProperty =
+            BindableProperty.Create("IsSearching", typeof(bool), typeof(InventoryPage), false);
+
+        public bool IsSearching
+        {
+            get { return (bool)GetValue(IsSearchingProperty); }
+            set { SetValue(IsSearchingProperty, value); }
+        }
+
         public InventoryPage()
         {
             _user = ConstentsUser.user;
@@ -32,24 +41,17 @@ namespace InverntoryManager.Pages
         {
             try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
             catch { DisplayAlert("Error", "SQL Table Connection", "OK"); }
-            _items = GetItems();
             itemCollectionView.ItemsSource = _items;
-        }
-
-        private  ObservableCollection<Item> GetItems(string searchText = null)
-        {
-            var items = _items;
-            if (String.IsNullOrWhiteSpace(searchText))
-                return items;
-
-            return items.Where(c => c.Name.StartsWith(searchText)) as ObservableCollection<Item>;
         }
 
         protected override async void OnAppearing()
         {
             try
             {
-                var items = await _connection.Table<Item>().ToListAsync();
+                var table = await _connection.Table<Item>().ToListAsync();
+                var items = from item in table
+                            where item.Owner == _user.Username
+                            select item; 
                 _items = new ObservableCollection<Item>(items);
                 itemCollectionView.ItemsSource = _items;
             }
@@ -58,6 +60,27 @@ namespace InverntoryManager.Pages
                 return;
             }
             base.OnAppearing();
+        }
+
+        private async Task FindItems(string Item)
+        {
+            try
+            {
+                IsSearching = true;
+                var table = await _connection.Table<Item>().ToListAsync();
+                var items = from item in table
+                            where item.Name == Item
+                            select item;
+                itemCollectionView.ItemsSource = items;
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Error", "Could not retrieve the list of movies.", "OK");
+            }
+            finally
+            {
+                IsSearching = false;
+            }
         }
 
         private async void OnAdd_Clicked(object sender, EventArgs e)
@@ -75,11 +98,17 @@ namespace InverntoryManager.Pages
         {
             try
             {
-                await Navigation.PushModalAsync(new UpdatePage());
+                var item = itemCollectionView.SelectedItem as Item;
+                if (item == null)
+                {
+                    await DisplayAlert("Alert", "No item selected!", "OK");
+                    return;
+                }
+                await Navigation.PushModalAsync(new UpdatePage(item));
             }
             catch
             {
-                await DisplayAlert("Error", "Can not display page", "Ok");
+                return;
             }
         }
         private async void Delete_Clicked(object sender, EventArgs e)
@@ -123,9 +152,12 @@ namespace InverntoryManager.Pages
             }
         }
 
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            itemCollectionView.ItemsSource = GetItems(e.NewTextValue);
+            if (e.NewTextValue == null)
+                return;
+
+            await FindItems(e.NewTextValue);
         }
     }
 }
