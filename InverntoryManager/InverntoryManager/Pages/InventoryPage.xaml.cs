@@ -37,22 +37,18 @@ namespace InverntoryManager.Pages
             Init();
         }
 
-        private void Init()
+        private async void Init()
         {
             try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
-            catch { DisplayAlert("Error", "SQL Table Connection", "OK"); }
-            itemCollectionView.ItemsSource = _items;
+            catch { await DisplayAlert("Error", "SQL Table Connection", "OK"); }
+            itemCollectionView.ItemsSource = await getData();
         }
 
         protected override async void OnAppearing()
         {
             try
             {
-                var table = await _connection.Table<Item>().ToListAsync();
-                var items = from item in table
-                            where item.Owner == _user.Username
-                            select item; 
-                _items = new ObservableCollection<Item>(items);
+                _items = await getData();
                 itemCollectionView.ItemsSource = _items;
             }
             catch
@@ -75,12 +71,21 @@ namespace InverntoryManager.Pages
             }
             catch (Exception)
             {
-                await DisplayAlert("Error", "Could not retrieve the list of movies.", "OK");
+                await DisplayAlert("Error", "Could not retrieve the list of items.", "OK");
             }
             finally
             {
                 IsSearching = false;
             }
+        }
+
+        private async Task<ObservableCollection<Item>> getData()
+        {
+                var table = await _connection.Table<Item>().ToListAsync();
+                var items = from item in table
+                            where item.Owner == _user.Username
+                            select item;
+                return new ObservableCollection<Item>(items);
         }
 
         private async void OnAdd_Clicked(object sender, EventArgs e)

@@ -67,10 +67,10 @@ namespace InverntoryManager.Models
         public string Class { get; set; }
 
         [MaxLength(255)]
-        public string AddDate { get; set; }
+        public DateTime AddDate { get; set; }
 
         [MaxLength(255)]
-        public string UpdateData { get; set; }
+        public DateTime UpdateData { get; set; }
 
         public bool Selected { get; set; }
 

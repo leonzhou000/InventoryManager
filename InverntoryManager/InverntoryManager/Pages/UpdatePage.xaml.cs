@@ -61,7 +61,7 @@ namespace InverntoryManager.Pages
         {
             if (CheckForm())
             {
-                _item.UpdateData = DateTime.Now.ToString();
+                _item.UpdateData = DateTime.Now;
                 await _connection.UpdateAsync(_item);
                 await Navigation.PopModalAsync();
             }

@@ -20,6 +20,7 @@ namespace InverntoryManager.Pages
         public string url { get; set; }
         public CollectionView CollectionView;
         private SQLiteAsyncConnection _connection;
+        private ObservableCollection<Item> _items;
 
         public ProfilePage()
         {
@@ -31,8 +32,8 @@ namespace InverntoryManager.Pages
         {
             _user = ConstentsUser.user;
             BindingContext = _user;
+            itemCollectionView.SelectionMode = SelectionMode.None;
             getProfileInfo();
-
             try { _connection = DependencyService.Get<ISQLiteDb>().GetConnection(); }
             catch
             {
@@ -60,10 +61,31 @@ namespace InverntoryManager.Pages
                 url = _user.imageUrl;
             }
         }
-
-        protected override bool OnBackButtonPressed()
+        protected override async void OnAppearing()
         {
-            return true;
+            try
+            {
+                int total = 0;
+                var table = await _connection.Table<Item>().ToListAsync();
+                var items = from item in table
+                            where item.Owner == _user.Username
+                            orderby item.Stock descending
+                            select item;
+                _items = new ObservableCollection<Item>(items);
+
+                foreach(var num in _items)
+                {
+                    total += num.Stock;
+                }
+
+                Totalitems.Text = total.ToString();
+                itemCollectionView.ItemsSource = _items;
+            }
+            catch
+            {
+                return;
+            }
+            base.OnAppearing();
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

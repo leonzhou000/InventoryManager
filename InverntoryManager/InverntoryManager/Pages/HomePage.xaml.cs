@@ -36,7 +36,7 @@ namespace InverntoryManager.Pages
                 var table = await _connection.Table<Item>().ToListAsync();
                 var items = from item in table
                             where item.Owner == user.Username
-                            orderby item.AddDate ascending
+                            orderby item.AddDate descending
                             select item;
 
                 _items = new ObservableCollection<Item>(items);

@@ -68,8 +68,8 @@ namespace InverntoryManager.Pages
                 ImageUrl = GetImage(pictureUrl.Text),
                 Owner = _user.Username,
                 Class = "something",
-                AddDate = DateTime.Now.ToString(),
-                UpdateData = DateTime.Now.ToString(),
+                AddDate = DateTime.Now,
+                UpdateData = DateTime.Now,
                 Selected = false
             };
 
