@@ -81,11 +81,19 @@ namespace InverntoryManager.Pages
 
         private async Task<ObservableCollection<Item>> getData()
         {
+            try
+            {
                 var table = await _connection.Table<Item>().ToListAsync();
                 var items = from item in table
                             where item.Owner == _user.Username
                             select item;
                 return new ObservableCollection<Item>(items);
+            }
+            catch
+            {
+                return null;
+            }
+                
         }
 
         private async void OnAdd_Clicked(object sender, EventArgs e)
