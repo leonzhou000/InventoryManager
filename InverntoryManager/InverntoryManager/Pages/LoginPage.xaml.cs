@@ -51,12 +51,14 @@ namespace InverntoryManager.Pages
 
         private void signInBtm_Clicked(object sender, EventArgs e)
         {
-            if (checkUser())
+            if (checkUserInfo())
             {
                 ConstentsUser.user = info;
                 DisplayAlert("Sign in"," Signin Success","OK");
-                MainPage page = new MainPage();
-                Application.Current.MainPage = page;
+                if (isAdmin(info.admin))
+                    Application.Current.MainPage = new TeacherMainPage();
+                else
+                    Application.Current.MainPage = new StudentMainPage();
             }
             else
             {
@@ -64,7 +66,13 @@ namespace InverntoryManager.Pages
                 return;
             }
         }
-        private bool checkUser()
+
+        private bool isAdmin(bool flag)
+        {
+            return flag;
+        }
+
+        private bool checkUserInfo()
         {
             if (String.IsNullOrEmpty(UserName.Text) && String.IsNullOrEmpty(password.Text))
             {

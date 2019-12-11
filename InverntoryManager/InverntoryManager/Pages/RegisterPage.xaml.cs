@@ -72,10 +72,9 @@ namespace InverntoryManager.Pages
         private bool AdminCheck()
         {
             if (admin.SelectedItem.ToString() == "Teacher")
-            {
                 return true;
-            }
-            return false;
+            else
+                return false;
         }
 
         private bool checkInfo()

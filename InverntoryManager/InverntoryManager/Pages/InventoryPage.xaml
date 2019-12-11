@@ -4,11 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="InverntoryManager.Pages.InventoryPage"
-             Title="Inventory">
+             x:Class="InverntoryManager.Pages.InventoryPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" IconImageSource="add.png" Clicked="OnAdd_Clicked"/>
-        <ToolbarItem Text="Update" IconImageSource="update.png" Clicked="Update_Clicked"/>
+        <ToolbarItem Text="Update" IconImageSource="update.png" Clicked="Update_Clicked" />
         <ToolbarItem Text="Delete" IconImageSource="trash.png" Clicked="Delete_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

@@ -8,6 +8,12 @@ using System.Text;
 
 namespace InverntoryManager.Models
 {
+    public static class Constants
+    {
+        // Replace strings with your Azure Mobile App endpoint.
+        public static string ApplicationURL = @"https://inventorymanager2.azurewebsites.net";
+    }
+
     class ConstentsUser
     {
         private static User _LoginUser = null;
@@ -34,10 +40,37 @@ namespace InverntoryManager.Models
             });
         }
 
+
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+    }
+
+    class StudentMainPageMasterMenuItem : INotifyPropertyChanged
+    {
+        public ObservableCollection<StudentPageMasterMenuItem> MenuItems { get; set; }
+
+        public StudentMainPageMasterMenuItem()
+        {
+            MenuItems = new ObservableCollection<StudentPageMasterMenuItem>(new[]
+            {
+                    new StudentPageMasterMenuItem { Id = 0, Title = "Home", TargetType = typeof(HomePage) },
+                    new StudentPageMasterMenuItem { Id = 1, Title = "Account", TargetType = typeof(ProfilePage) },
+                    new StudentPageMasterMenuItem { Id = 2, Title = "Items", TargetType = typeof(ItemPage) },
+                });
+        }
+
+        #region INotifyPropertyChanged Implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+        void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged == null)
+                return;
+
             PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion

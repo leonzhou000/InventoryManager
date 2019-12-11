@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Newtonsoft.Json;
+using SQLite;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -9,17 +10,21 @@ namespace InverntoryManager.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         [PrimaryKey, AutoIncrement]
+        //[JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         [MaxLength(255)]
+        //[JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
         
         [MaxLength(255)]
+        //[JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         private string _firstName;
 
         [MaxLength(255)]
+        //[JsonProperty(PropertyName = "firstname")]
         public string FirstName {
             get { return _firstName; } 
             set
@@ -37,6 +42,7 @@ namespace InverntoryManager.Models
         private string _LastName;
 
         [MaxLength(255)]
+        //[JsonProperty(PropertyName = "lastname")]
         public string LastName 
         { 
             get { return _LastName; }
@@ -52,10 +58,16 @@ namespace InverntoryManager.Models
             } 
         }
 
+        //[JsonProperty(PropertyName = "admin")]
         public bool admin { get; set; }
 
         [MaxLength(255)]
+        //[JsonProperty(PropertyName = "imageUrl")]
         public string imageUrl { get; set; }
+
+        [MaxLength(255)]
+        //[JsonProperty(PropertyName = "Course")]
+        public string Course { get; set; }
 
         public User() { }
 
