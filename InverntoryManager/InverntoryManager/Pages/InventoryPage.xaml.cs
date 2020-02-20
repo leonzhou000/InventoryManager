@@ -1,9 +1,7 @@
 ﻿using InverntoryManager.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
@@ -81,80 +79,124 @@ namespace InverntoryManager.Pages
 
         private async Task<ObservableCollection<Item>> getData()
         {
-                var table = await _connection.Table<Item>().ToListAsync();
-                var items = from item in table
-                            where item.Owner == _user.Username
-                            select item;
-                return new ObservableCollection<Item>(items);
+            try
+            {
+                if (_user.admin)
+                {
+                    var table = await _connection.Table<Item>().ToListAsync();
+                    var items = from item in table
+                                where item.Owner == _user.Username
+                                select item;
+                    return new ObservableCollection<Item>(items);
+                }
+                else
+                {
+                    var table = await _connection.Table<Item>().ToListAsync();
+                    var items = from item in table
+                               where item.Owner != _user.Username
+                               select item;
+                    return new ObservableCollection<Item>(items);
+                }
+            }
+
+            catch
+            {
+                return null;
+            }
+                
         }
 
         private async void OnAdd_Clicked(object sender, EventArgs e)
         {
-            try
+            if (_user.admin)
             {
-                await Navigation.PushModalAsync(new AddItemPage(_user));
+                try
+                {
+                    await Navigation.PushModalAsync(new AddItemPage(_user));
+                }
+                catch
+                {
+                    await DisplayAlert("Error", "Can not display page", "Ok");
+                }
             }
-            catch
+            else
             {
-                await DisplayAlert("Error", "Can not display page", "Ok");
+                item = itemCollectionView.SelectedItem as Item;
+                var temp = new Item
+                {
+                    Name = item.Name,
+                    Stock = 1,
+                    ImageUrl = item.ImageUrl,
+                    Owner = _user.Username,
+                    Selected = false
+                };
+                await _connection.InsertAsync(temp);
             }
         }
         private async void Update_Clicked(object sender, EventArgs e)
         {
-            try
-            {
-                var item = itemCollectionView.SelectedItem as Item;
-                if (item == null)
-                {
-                    await DisplayAlert("Alert", "No item selected!", "OK");
-                    return;
-                }
-                await Navigation.PushModalAsync(new UpdatePage(item));
-            }
-            catch
-            {
-                return;
-            }
-        }
-        private async void Delete_Clicked(object sender, EventArgs e)
-        {
-            if (MultiSelect.IsChecked)
-            {
-                try
-                {
-                    foreach (Item item in _items.ToList())
-                    {
-                        if (item.Selected)
-                        {
-                            await _connection.DeleteAsync(item);
-                            _items.Remove(item);
-                        }
-                    }
-                }
-                catch
-                {
-                    return;
-                }
-                
-            }
-            else
+            if (_user.admin)
             {
                 try
                 {
                     var item = itemCollectionView.SelectedItem as Item;
                     if (item == null)
                     {
-                        await DisplayAlert("Alert", "No item selected", "OK");
+                        await DisplayAlert("Alert", "No item selected!", "OK");
                         return;
                     }
-                    await _connection.DeleteAsync(item);
-                    _items.Remove(item);
+                    await Navigation.PushModalAsync(new UpdatePage(item));
                 }
                 catch
                 {
                     return;
                 }
             }
+            return;
+        }
+        private async void Delete_Clicked(object sender, EventArgs e)
+        {
+            if (_user.admin)
+            {
+                if (MultiSelect.IsChecked)
+                {
+                    try
+                    {
+                        foreach (Item item in _items.ToList())
+                        {
+                            if (item.Selected)
+                            {
+                                await _connection.DeleteAsync(item);
+                                _items.Remove(item);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        return;
+                    }
+
+                }
+                else
+                {
+                    try
+                    {
+                        var item = itemCollectionView.SelectedItem as Item;
+                        if (item == null)
+                        {
+                            await DisplayAlert("Alert", "No item selected", "OK");
+                            return;
+                        }
+                        await _connection.DeleteAsync(item);
+                        _items.Remove(item);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+            }
+           else { return;}
         }
 
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)

@@ -60,8 +60,7 @@ namespace InverntoryManager.Models
             {
                     new StudentPageMasterMenuItem { Id = 0, Title = "Home", TargetType = typeof(HomePage) },
                     new StudentPageMasterMenuItem { Id = 1, Title = "Account", TargetType = typeof(ProfilePage) },
-                    new StudentPageMasterMenuItem { Id = 2, Title = "Items", TargetType = typeof(ItemPage) },
-                    new StudentPageMasterMenuItem { Id = 2, Title = "Checkout", TargetType = typeof(Checkout) },
+                    new StudentPageMasterMenuItem { Id = 2, Title = "Items", TargetType = typeof(InventoryPage) },
                 });
         }
 
