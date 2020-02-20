@@ -60,6 +60,7 @@ namespace InverntoryManager.Models
                 OnPropertyChanged(nameof(Stock));
              }
         }
+
         [MaxLength(255)]
         public string Owner { get; set; }
 
