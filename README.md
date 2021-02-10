@@ -1,5 +1,5 @@
 # Inventory Manager
 
 
-A simple inventory manager app, that allows users manager item.
+A simple cross platform Xamarin app, that allows users manager item.
 
